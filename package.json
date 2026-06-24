@@ -1,0 +1,91 @@
+{
+  "name": "inkora",
+  "version": "0.1.0",
+  "description": "Inkora — plug-and-play TipTap v3 rich text editor for React with toolbar, media, tables, math and dark mode",
+  "keywords": [
+    "inkora",
+    "tiptap",
+    "rich-text-editor",
+    "react",
+    "wysiwyg",
+    "editor",
+    "prosemirror",
+    "markdown"
+  ],
+  "author": "Ishu Barman <ishu.barman9067900@gmail.com> (https://github.com/ishubarman7)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishubarman7/inkora.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ishubarman7/inkora/issues"
+  },
+  "homepage": "https://github.com/ishubarman7/inkora#readme",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@tiptap/core": "^3.0.0",
+    "@tiptap/extension-character-count": "^3.0.0",
+    "@tiptap/extension-code-block-lowlight": "^3.0.0",
+    "@tiptap/extension-color": "^3.0.0",
+    "@tiptap/extension-dropcursor": "^3.0.0",
+    "@tiptap/extension-font-family": "^3.0.0",
+    "@tiptap/extension-gapcursor": "^3.0.0",
+    "@tiptap/extension-highlight": "^3.0.0",
+    "@tiptap/extension-image": "^3.0.0",
+    "@tiptap/extension-link": "^3.0.0",
+    "@tiptap/extension-mention": "^3.0.0",
+    "@tiptap/extension-placeholder": "^3.0.0",
+    "@tiptap/extension-subscript": "^3.0.0",
+    "@tiptap/extension-superscript": "^3.0.0",
+    "@tiptap/extension-table": "^3.0.0",
+    "@tiptap/extension-task-item": "^3.0.0",
+    "@tiptap/extension-task-list": "^3.0.0",
+    "@tiptap/extension-text-align": "^3.0.0",
+    "@tiptap/extension-text-style": "^3.0.0",
+    "@tiptap/extension-underline": "^3.0.0",
+    "@tiptap/extension-youtube": "^3.0.0",
+    "@tiptap/pm": "^3.0.0",
+    "@tiptap/react": "^3.0.0",
+    "@tiptap/starter-kit": "^3.0.0",
+    "katex": ">=0.16.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "katex": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "inkora": "^0.1.0",
+    "lowlight": "^3.0.0",
+    "tippy.js": "^6.3.7",
+    "tiptap-extension-global-drag-handle": "^0.1.18"
+  },
+  "devDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^6.0.3"
+  }
+}
