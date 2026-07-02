@@ -198,13 +198,13 @@ export const editorStyles = `
     table-layout: fixed;
     width: 100%;
     margin: 0.5em 0 0.8em;
-    border: 1px solid var(--rte-border, #e4e7eb);
+    border: 1.5px solid var(--rte-table-border, #c4c7cc);
     border-radius: 6px;
     overflow: hidden;
   }
   .rte-content td, .rte-content th {
     min-width: 3em;
-    border: 1px solid var(--rte-border, #e4e7eb);
+    border: 1px solid var(--rte-table-border, #c4c7cc);
     padding: 7px 11px;
     vertical-align: top;
     box-sizing: border-box;
@@ -218,6 +218,15 @@ export const editorStyles = `
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--rte-muted, #5f6368);
+    border-bottom: 2px solid var(--rte-table-border, #c4c7cc);
+  }
+  .dark .rte-content table,
+  .dark .rte-content td,
+  .dark .rte-content th {
+    border-color: var(--rte-table-border-dark, #4a4d51);
+  }
+  .dark .rte-content th {
+    border-bottom-color: var(--rte-table-border-dark, #4a4d51);
   }
   .rte-content .selectedCell:after {
     z-index: 2; position: absolute; content: "";

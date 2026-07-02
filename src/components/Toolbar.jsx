@@ -374,26 +374,14 @@ function MenuBar({ editor, open, onToggle, onClose, onToggleTheme, theme, imageR
           onMouseLeave={() => setSubOpen(null)}
         >
           <button className="rte-drop-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }} onMouseDown={e => e.preventDefault()}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontSize: 13 }}>📤</span>
-              Upload File
-            </span>
+            Upload File
             <span style={{ fontSize: 9, color: 'var(--rte-muted)' }}>▶</span>
           </button>
           {subOpen === 'upload' && (
             <div className="rte-submenu-panel">
-              <DropItem onAction={insertImage}>
-                <ImageIcon size={14} />
-                Image
-              </DropItem>
-              <DropItem onAction={insertVideo}>
-                <VideoIcon size={14} />
-                Video
-              </DropItem>
-              <DropItem onAction={insertAudio}>
-                <AudioIcon size={14} />
-                Audio
-              </DropItem>
+              <DropItem onAction={insertImage}>Image</DropItem>
+              <DropItem onAction={insertVideo}>Video</DropItem>
+              <DropItem onAction={insertAudio}>Audio</DropItem>
             </div>
           )}
         </div>
@@ -405,29 +393,16 @@ function MenuBar({ editor, open, onToggle, onClose, onToggleTheme, theme, imageR
           onMouseLeave={() => setSubOpen(null)}
         >
           <button className="rte-drop-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }} onMouseDown={e => e.preventDefault()}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontSize: 13 }}>🌐</span>
-              Media Embed
-            </span>
+            Media Embed
             <span style={{ fontSize: 9, color: 'var(--rte-muted)' }}>▶</span>
           </button>
           {subOpen === 'media' && (
             <div className="rte-submenu-panel">
-              <DropItem onAction={() => { onClose(); onSelectModal('image_url'); }}>
-                <span style={{ fontSize: 12 }}>🖼️</span> Image URL
-              </DropItem>
-              <DropItem onAction={() => { onClose(); onSelectModal('video_url'); }}>
-                <span style={{ fontSize: 12 }}>📹</span> Video URL
-              </DropItem>
-              <DropItem onAction={() => { onClose(); onSelectModal('audio_url'); }}>
-                <span style={{ fontSize: 12 }}>🎵</span> Audio URL
-              </DropItem>
-              <DropItem onAction={() => { onClose(); onSelectModal('gif'); }}>
-                <span style={{ fontSize: 12 }}>🎬</span> Animated GIF
-              </DropItem>
-              <DropItem onAction={() => { onClose(); onSelectModal('video_embed'); }}>
-                <span style={{ fontSize: 12 }}>📺</span> Video Embed (YouTube)
-              </DropItem>
+              <DropItem onAction={() => { onClose(); onSelectModal('image_url'); }}>Image URL</DropItem>
+              <DropItem onAction={() => { onClose(); onSelectModal('video_url'); }}>Video URL</DropItem>
+              <DropItem onAction={() => { onClose(); onSelectModal('audio_url'); }}>Audio URL</DropItem>
+              <DropItem onAction={() => { onClose(); onSelectModal('gif'); }}>Animated GIF</DropItem>
+              <DropItem onAction={() => { onClose(); onSelectModal('video_embed'); }}>Video Embed (YouTube)</DropItem>
             </div>
           )}
         </div>
