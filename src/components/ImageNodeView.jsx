@@ -72,11 +72,14 @@ const HANDLES = [
   { cls: 'sw', side: 'w' }, { cls: 'w',  side: 'w' },
 ];
 
-export function ImageNodeView({ node, updateAttributes, selected }) {
+export function ImageNodeView({ node, updateAttributes, selected, editor }) {
   const [liveWidth, setLiveWidth] = useState(null);
   const [pendingWidth, setPendingWidth] = useState(null);
   const wrapRef = useRef(null);
   const attrs = node.attrs;
+  // Viewer mode: no selection outline, no resize handles — render as written
+  const isEditable = editor?.isEditable ?? true;
+  const showSelected = selected && isEditable;
 
   useEffect(() => {
     if (pendingWidth !== null && attrs.width === pendingWidth) setPendingWidth(null);
@@ -124,10 +127,10 @@ export function ImageNodeView({ node, updateAttributes, selected }) {
       <div ref={wrapRef} className="rte-img-sizer" style={{ width: sizerWidth, ...alignStyle }}>
         <img
           src={attrs.src} alt={attrs.alt || ''} title={attrs.title || ''}
-          style={{ ...buildImgStyle(attrs), outline: selected ? '2.5px solid #0b57d0' : 'none', outlineOffset: '2px' }}
+          style={{ ...buildImgStyle(attrs), outline: showSelected ? '2.5px solid #0b57d0' : 'none', outlineOffset: '2px' }}
           draggable={false}
         />
-        {selected && (
+        {showSelected && (
           <>
             {HANDLES.map(h => (
               <div key={h.cls} className={`rte-rsz rte-rsz-${h.cls}`} onMouseDown={e => onResizeStart(e, h.side)} />

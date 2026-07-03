@@ -5,6 +5,12 @@ All notable changes to Inkora are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] — 2026-07-03
+
+### Fixed
+- Updated Callout insert command to use `wrapIn` and `toggleWrap` to correctly containerize blocks inside callouts.
+- Removed `!important` from the highlight stylesheet and added inheritance rules so highlighted text respects custom text colors.
+
 ---
 
 ## [0.1.1] — 2026-06-25

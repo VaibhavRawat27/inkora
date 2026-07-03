@@ -67,11 +67,14 @@ const HANDLES = [
   { cls: 'sw', side: 'w' }, { cls: 'w',  side: 'w' },
 ];
 
-export function VideoNodeView({ node, updateAttributes, selected }) {
+export function VideoNodeView({ node, updateAttributes, selected, editor }) {
   const [liveWidth, setLiveWidth] = useState(null);
   const [pendingWidth, setPendingWidth] = useState(null);
   const wrapRef = useRef(null);
   const attrs = node.attrs;
+  // Viewer mode: no selection outline, no resize handles — render as written
+  const isEditable = editor?.isEditable ?? true;
+  const showSelected = selected && isEditable;
 
   useEffect(() => {
     if (pendingWidth !== null && attrs.width === pendingWidth) setPendingWidth(null);
@@ -121,9 +124,9 @@ export function VideoNodeView({ node, updateAttributes, selected }) {
           src={attrs.src} poster={attrs.poster}
           controls={attrs.controls !== false}
           autoPlay={attrs.autoplay} loop={attrs.loop} muted={attrs.muted}
-          style={{ ...buildVideoStyle(attrs), outline: selected ? '2.5px solid #0b57d0' : 'none', outlineOffset: '2px' }}
+          style={{ ...buildVideoStyle(attrs), outline: showSelected ? '2.5px solid #0b57d0' : 'none', outlineOffset: '2px' }}
         />
-        {selected && (
+        {showSelected && (
           <>
             {HANDLES.map(h => (
               <div key={h.cls} className={`rte-vid-rsz rte-vid-rsz-${h.cls}`} onMouseDown={e => onResizeStart(e, h.side)} />

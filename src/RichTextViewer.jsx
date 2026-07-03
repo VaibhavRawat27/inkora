@@ -5,6 +5,34 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import { createEditorExtensions } from './extensions/index.js';
 import { editorStyles } from './styles.js';
 
+const LIGHT_VARS = {
+  '--rte-page': '#ffffff',
+  '--rte-bar': '#ffffff',
+  '--rte-pill': '#f6f8fc',
+  '--rte-hover': 'rgba(60,64,67,.09)',
+  '--rte-border': '#e4e7eb',
+  '--rte-table-border': '#b6bac2',
+  '--rte-ink': '#202124',
+  '--rte-muted': '#5f6368',
+  '--rte-accent': '#0b57d0',
+  '--rte-accent-soft': '#d3e3fd',
+  '--rte-shadow': '0 1px 2px rgba(0,0,0,.08),0 8px 28px rgba(0,0,0,.08)',
+};
+
+const DARK_VARS = {
+  '--rte-page': '#1f2023',
+  '--rte-bar': '#26272b',
+  '--rte-pill': '#2b2c30',
+  '--rte-hover': 'rgba(255,255,255,.09)',
+  '--rte-border': '#3c4043',
+  '--rte-table-border': '#5f6368',
+  '--rte-ink': '#e8eaed',
+  '--rte-muted': '#9aa0a6',
+  '--rte-accent': '#8ab4f8',
+  '--rte-accent-soft': '#1e3a5f',
+  '--rte-shadow': '0 1px 2px rgba(0,0,0,.5),0 10px 30px rgba(0,0,0,.45)',
+};
+
 export function InkoraViewer({ content, theme = 'light' }) {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -28,24 +56,34 @@ export function InkoraViewer({ content, theme = 'light' }) {
     }
   }, [content, editor]);
 
+  const cssVars = theme === 'dark' ? DARK_VARS : LIGHT_VARS;
+
   if (!isMounted) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: '16px 0' }}>
-        {[['55%', 28], ['100%', 14], ['83%', 14], ['70%', 14]].map(([w, h], i) => (
-          <div key={i} style={{
-            width: w, height: h, borderRadius: 4,
-            background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-            backgroundSize: '200% 100%',
-            animation: 'rte-shimmer 1.4s infinite',
-          }} />
-        ))}
-        <style>{`@keyframes rte-shimmer { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }`}</style>
+      <div style={{ ...cssVars, background: 'var(--rte-page)', borderRadius: 8, padding: '16px 20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {[['55%', 28], ['100%', 14], ['83%', 14], ['70%', 14]].map(([w, h], i) => (
+            <div key={i} style={{
+              width: w, height: h, borderRadius: 4,
+              background: 'var(--rte-border)',
+            }} />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className={`inkora-viewer ${theme}`} style={{ width: '100%' }}>
+    <div
+      className={`inkora-viewer ${theme}`}
+      style={{
+        ...cssVars,
+        width: '100%',
+        background: 'var(--rte-page)',
+        color: 'var(--rte-ink)',
+        borderRadius: 8,
+      }}
+    >
       <style dangerouslySetInnerHTML={{ __html: editorStyles }} />
       <div className="viewer-inner" style={{ padding: '16px 20px', maxWidth: 860, margin: '0 auto' }}>
         <EditorContent editor={editor} />

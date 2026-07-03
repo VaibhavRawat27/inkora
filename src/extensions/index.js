@@ -129,7 +129,21 @@ export const createEditorExtensions = (config = {}) => {
       },
     }).configure({ allowBase64: true }),
     Table.configure({ resizable: true }),
-    TableRow,
+    TableRow.extend({
+      addAttributes() {
+        return {
+          ...this.parent?.(),
+          rowheight: {
+            default: null,
+            parseHTML: el => {
+              const h = el.style.height;
+              return h ? parseInt(h, 10) : null;
+            },
+            renderHTML: attrs => attrs.rowheight ? { style: `height:${attrs.rowheight}px` } : {},
+          },
+        };
+      },
+    }),
     TableHeader,
     TableCell,
     Subscript.extend({
@@ -186,6 +200,11 @@ export const createEditorExtensions = (config = {}) => {
             default: false,
             parseHTML: el => el.getAttribute('data-collapsed') === 'true',
             renderHTML: attrs => ({ 'data-collapsed': attrs.collapsed }),
+          },
+          codeTheme: {
+            default: 'vscode-dark',
+            parseHTML: el => el.getAttribute('data-code-theme') || 'vscode-dark',
+            renderHTML: attrs => ({ 'data-code-theme': attrs.codeTheme }),
           },
         };
       },

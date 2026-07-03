@@ -180,31 +180,24 @@ export const editorStyles = `
     tab-size: 2;
   }
 
-  /* Syntax highlighting - VS Code Dark theme */
-  .hljs-comment, .hljs-quote { color: #6a9955; font-style: italic; }
-  .hljs-keyword, .hljs-selector-tag, .hljs-literal { color: #569cd6; }
-  .hljs-number { color: #b5cea8; }
-  .hljs-string, .hljs-subst { color: #ce9178; }
-  .hljs-function, .hljs-title { color: #dcdcaa; }
-  .hljs-variable, .hljs-attribute, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class { color: #9cdcfe; }
-  .hljs-built_in, .hljs-params { color: #ce9178; }
-  .hljs-type { color: #4ec9b0; }
-  .hljs-operator, .hljs-punctuation { color: #d4d4d4; }
-  .hljs-attr { color: #9cdcfe; }
+  /* Syntax highlighting colours are scoped per-block by CodeBlock.jsx */
 
   /* Tables */
+  .rte-content .tableWrapper {
+    overflow-x: auto;
+    margin: 0.5em 0 0.8em;
+    padding: 2px 0;
+  }
   .rte-content table {
     border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
-    margin: 0.5em 0 0.8em;
-    border: 1.5px solid var(--rte-table-border, #c4c7cc);
-    border-radius: 6px;
-    overflow: hidden;
+    margin: 0;
+    border: 2px solid var(--rte-table-border, #b6bac2);
   }
   .rte-content td, .rte-content th {
     min-width: 3em;
-    border: 1px solid var(--rte-table-border, #c4c7cc);
+    border: 1px solid var(--rte-table-border, #b6bac2);
     padding: 7px 11px;
     vertical-align: top;
     box-sizing: border-box;
@@ -218,15 +211,7 @@ export const editorStyles = `
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--rte-muted, #5f6368);
-    border-bottom: 2px solid var(--rte-table-border, #c4c7cc);
-  }
-  .dark .rte-content table,
-  .dark .rte-content td,
-  .dark .rte-content th {
-    border-color: var(--rte-table-border-dark, #4a4d51);
-  }
-  .dark .rte-content th {
-    border-bottom-color: var(--rte-table-border-dark, #4a4d51);
+    border-bottom: 2px solid var(--rte-table-border, #b6bac2);
   }
   .rte-content .selectedCell:after {
     z-index: 2; position: absolute; content: "";
@@ -238,17 +223,23 @@ export const editorStyles = `
     position: absolute; right: -2px; top: 0; bottom: -2px;
     width: 4px; background: var(--rte-accent, #0b57d0);
     pointer-events: none;
+    z-index: 20;
   }
   .rte-content.resize-cursor { cursor: col-resize; }
+  .rte-content.resize-cursor * { cursor: col-resize; }
 
   /* Highlight Mark style */
   .rte-content mark,
   .viewer-inner mark {
     background-color: #fff475;
-    color: #202124 !important;
+    color: #202124;
     border-radius: 4px;
     padding: 1px 4px;
     margin: 0 1px;
+  }
+  .rte-content span[style*="color"] mark,
+  .viewer-inner span[style*="color"] mark {
+    color: inherit;
   }
 
   /* Mention */

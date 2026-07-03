@@ -37,8 +37,8 @@ export const Callout = Node.create({
 
   addCommands() {
     return {
-      setCallout: (attributes) => ({ commands }) => commands.setNode(this.name, attributes),
-      toggleCallout: (attributes) => ({ commands }) => commands.toggleNode(this.name, 'paragraph', attributes),
+      setCallout: (attributes) => ({ commands }) => commands.wrapIn(this.name, attributes),
+      toggleCallout: (attributes) => ({ commands }) => commands.toggleWrap(this.name, attributes),
     };
   },
 });

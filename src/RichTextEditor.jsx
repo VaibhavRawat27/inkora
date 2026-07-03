@@ -6,6 +6,7 @@ import { createEditorExtensions } from './extensions/index.js';
 import { editorStyles } from './styles.js';
 import Toolbar from './components/Toolbar.jsx';
 import BubbleMenu from './components/BubbleMenu.jsx';
+import TableResizeHandle from './components/TableResizeHandle.jsx';
 
 const LIGHT_VARS = {
   '--rte-page': '#ffffff',
@@ -13,6 +14,7 @@ const LIGHT_VARS = {
   '--rte-pill': '#f6f8fc',
   '--rte-hover': 'rgba(60,64,67,.09)',
   '--rte-border': '#e4e7eb',
+  '--rte-table-border': '#b6bac2',
   '--rte-ink': '#202124',
   '--rte-muted': '#5f6368',
   '--rte-accent': '#0b57d0',
@@ -26,6 +28,7 @@ const DARK_VARS = {
   '--rte-pill': '#2b2c30',
   '--rte-hover': 'rgba(255,255,255,.09)',
   '--rte-border': '#3c4043',
+  '--rte-table-border': '#5f6368',
   '--rte-ink': '#e8eaed',
   '--rte-muted': '#9aa0a6',
   '--rte-accent': '#8ab4f8',
@@ -239,6 +242,7 @@ export function InkoraEditor({
       {/* Editing surface */}
       <div className="rte-scroll-container" style={{ background: 'var(--rte-page)', overflowY: 'auto', ...(isFullscreen ? { flex: 1 } : height ? { height: typeof height === 'number' ? `${height}px` : height } : { minHeight }) }}>
         <BubbleMenu editor={editor} />
+        <TableResizeHandle editor={editor} />
         <div style={{ padding: '26px 34px', maxWidth: 860, margin: '0 auto' }}>
           <EditorContent editor={editor} />
         </div>

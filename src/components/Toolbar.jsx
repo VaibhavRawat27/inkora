@@ -306,7 +306,6 @@ function TableGridPicker({ editor, label, tableHover, setTableHover, subOpen, se
 function MenuBar({ editor, open, onToggle, onClose, onToggleTheme, theme, imageRef, videoRef, audioRef, onSelectModal, isFullscreen, onToggleFullscreen }) {
   const [subOpen, setSubOpen] = useState(null);
   const [tableHover, setTableHover] = useState({ rows: 0, cols: 0 });
-  const isInTable = editor?.isActive('table') || editor?.isActive('tableCell') || editor?.isActive('tableHeader');
 
   const insertLink = () => { onClose(); onSelectModal('link'); };
 
@@ -484,50 +483,6 @@ function MenuBar({ editor, open, onToggle, onClose, onToggleTheme, theme, imageR
           onClose();
           editor?.commands.toggleSuperscript();
         }}>Superscript</DropItem>
-      </MenuBarMenu>
-
-      <MenuBarMenu label="Table" name="table" open={open} onToggle={onToggle} panelStyle={{ minWidth: 260 }}>
-        <TableGridPicker
-          editor={editor}
-          label="Insert table"
-          tableHover={tableHover}
-          setTableHover={setTableHover}
-          subOpen={subOpen}
-          setSubOpen={setSubOpen}
-          onClose={onClose}
-        />
-        {isInTable && <>
-          <DropSep />
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().addRowAfter().run(); }}>
-            <PlusRowIcon size={14} /> Insert row below
-          </DropItem>
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().addRowBefore().run(); }}>
-            <PlusRowIcon size={14} /> Insert row above
-          </DropItem>
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().deleteRow().run(); }}>
-            <MinusRowIcon size={14} /> Delete row
-          </DropItem>
-          <DropSep />
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().addColumnAfter().run(); }}>
-            <PlusColIcon size={14} /> Insert column right
-          </DropItem>
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().addColumnBefore().run(); }}>
-            <PlusColIcon size={14} /> Insert column left
-          </DropItem>
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().deleteColumn().run(); }}>
-            <MinusColIcon size={14} /> Delete column
-          </DropItem>
-          <DropSep />
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().mergeCells().run(); }}>
-            <MergeCellsIcon size={14} /> Merge cells
-          </DropItem>
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().splitCell().run(); }}>
-            Split cell
-          </DropItem>
-          <DropItem onAction={() => { onClose(); editor?.chain().focus().deleteTable().run(); }}>
-            Delete table
-          </DropItem>
-        </>}
       </MenuBarMenu>
 
       <MenuBarMenu label="Help" name="help" open={open} onToggle={onToggle}>
@@ -877,6 +832,7 @@ function FormatBar({ editor, open, onToggle, onClose, imageRef, videoRef, audioR
   };
 
   const insertLink = () => { onClose(); onSelectModal('link'); };
+  const isInTable = editor?.isActive('table') || editor?.isActive('tableCell') || editor?.isActive('tableHeader');
 
   return (
     <div style={{
@@ -1002,6 +958,59 @@ function FormatBar({ editor, open, onToggle, onClose, imageRef, videoRef, audioR
           <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
         </svg>
       </button>
+
+      {/* Table operations — contextual, shown while the cursor is inside a table */}
+      {isInTable && <>
+        <Sep />
+        <button className="rte-btn" title="Insert row above" style={{ gap: 1 }}
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().addRowBefore().run(); }}>
+          <PlusRowIcon size={15} /><span style={{ fontSize: 10, lineHeight: 1 }}>↑</span>
+        </button>
+        <button className="rte-btn" title="Insert row below" style={{ gap: 1 }}
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().addRowAfter().run(); }}>
+          <PlusRowIcon size={15} /><span style={{ fontSize: 10, lineHeight: 1 }}>↓</span>
+        </button>
+        <button className="rte-btn" title="Delete row"
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().deleteRow().run(); }}>
+          <MinusRowIcon size={15} />
+        </button>
+        <Sep />
+        <button className="rte-btn" title="Insert column left" style={{ gap: 1 }}
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().addColumnBefore().run(); }}>
+          <PlusColIcon size={15} /><span style={{ fontSize: 10, lineHeight: 1 }}>←</span>
+        </button>
+        <button className="rte-btn" title="Insert column right" style={{ gap: 1 }}
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().addColumnAfter().run(); }}>
+          <PlusColIcon size={15} /><span style={{ fontSize: 10, lineHeight: 1 }}>→</span>
+        </button>
+        <button className="rte-btn" title="Delete column"
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().deleteColumn().run(); }}>
+          <MinusColIcon size={15} />
+        </button>
+        <Sep />
+        <button className="rte-btn" title="Merge cells" disabled={!editor?.can().mergeCells()}
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().mergeCells().run(); }}>
+          <MergeCellsIcon size={15} />
+        </button>
+        <button className="rte-btn" title="Split cell" disabled={!editor?.can().splitCell()}
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().splitCell().run(); }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><polyline points="10 9 6 12 10 15"/><polyline points="14 9 18 12 14 15"/>
+          </svg>
+        </button>
+        <button className="rte-btn" title="Toggle header row"
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().toggleHeaderRow().run(); }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><rect x="3" y="3" width="18" height="6" rx="2" fill="currentColor" fillOpacity=".25" stroke="none"/>
+          </svg>
+        </button>
+        <button className="rte-btn" title="Delete table"
+          onMouseDown={e => { e.preventDefault(); editor?.chain().focus().deleteTable().run(); }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="5" y1="5" x2="19" y2="19" stroke="#d93025" strokeWidth="2.2"/>
+          </svg>
+        </button>
+      </>}
     </div>
   );
 }
